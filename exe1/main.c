@@ -7,8 +7,6 @@ const int LED_PIN_R = 4;
 
 volatile int flag_f_r = 0;
 volatile bool led_state = false;
-volatile bool timer_active = false;
-repeating_timer_t timer;
 
 // Callback da interrupção do botão
 void btn_callback(uint gpio, uint32_t events) {
@@ -35,6 +33,9 @@ int main() {
     gpio_set_dir(BTN_PIN_R, GPIO_IN);
     gpio_pull_up(BTN_PIN_R);
     gpio_set_irq_enabled_with_callback(BTN_PIN_R, GPIO_IRQ_EDGE_FALL, true, &btn_callback);
+
+    bool timer_active = false;
+    repeating_timer_t timer;
 
     while (true) {
         if (flag_f_r) {
